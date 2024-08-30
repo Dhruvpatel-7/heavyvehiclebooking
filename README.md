@@ -23,65 +23,65 @@
    cd online-booking-system
 2. **Create a Virtual Environment:**
 
-Create a virtual environment to manage project dependencies:
+   Create a virtual environment to manage project dependencies:
 
-bash
-Copy code
-python -m venv venv
-Activate the virtual environment:
+   bash
+   Copy code
+   python -m venv venv
+   Activate the virtual environment:
 
-On macOS and Linux:
-
-bash
-Copy code
-source venv/bin/activate
-On Windows:
-
-bash
-Copy code
-venv\Scripts\activate
+   On macOS and Linux:
+   bash
+   Copy code
+   source venv/bin/activate
+   
+   On Windows:
+   bash
+   Copy code
+   venv\Scripts\activate
 
 3. **Install Dependencies:**
 
-Install the required Python packages:
+   Install the required Python packages:
 
-bash
-Copy code
-pip install -r requirements.txt
+   bash
+   Copy code
+   pip install -r requirements.txt
+
 4. **Apply Migrations:**
 
-Set up the database schema:
+   Set up the database schema:
 
-bash
-Copy code
-python manage.py migrate
+   bash
+   Copy code
+   python manage.py migrate
 
 5. **Create a Superuser (Optional):**
 
 Create a superuser for accessing the Django admin interface:
 
-bash
-Copy code
-python manage.py createsuperuser
+   bash
+   Copy code
+   python manage.py createsuperuser
 
 6. **Run the Development Server:**
 
-Start the Django development server:
+   Start the Django development server:
 
-bash
-Copy code
-python manage.py runserver
-The application will be accessible at http://127.0.0.1:8000/.
+   bash
+   Copy code
+   python manage.py runserver
+   The application will be accessible at http://127.0.0.1:8000/.
 
-Usage
-Signup: Register a new user account.
-Login: Access the system using your credentials.
-Manage Bookings: Create, view, update, or delete bookings.
-Contributing
-Feel free to submit issues or pull requests to improve the project. Please ensure that your contributions align with the project's goals and follow the coding guidelines provided.
+**Usage**
+   Signup: Register a new user account.
+   Login: Access the system using your credentials.
+   Manage Bookings: Create, view, update, or delete bookings.
+   Contributing
+   Feel free to submit issues or pull requests to improve the project. Please ensure that your contributions align with the project's goals and follow the coding guidelines    provided.
 
-Contact
-For any questions or feedback, please reach out to dnp1982002@gmail.com.
+   Contact
+   For any questions or feedback, please reach out to dnp1982002@gmail.com.
 
 
 ### Key Points:
