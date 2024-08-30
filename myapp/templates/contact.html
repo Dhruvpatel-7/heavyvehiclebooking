@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+{% if messages %}
+{% for msg in messages %}
+<script>alert("{{ msg }}");</script>
+{% endfor %}
+{% endif %}
+    <header class="header">
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+    
+        <a href="{% url 'index.html' %}" class="logo"> <span>Heavy </span>duty </a>
+    
+        <nav class="navbar">
+            <a href="{% url 'index.html' %}">home</a>
+            <a href="{% url 'vehicles.html' %}">vehicles</a>
+            <a href="{% url 'services.html' %}">services</a>
+            <a href="{% url 'contact.html' %}">contact</a>
+            {% if owner %}
+            <a href="/ownerpage">My Page</a>
+            {% else %}
+            <a href="/clientpage">My Page</a>
+            {% endif %}
+        </nav>
+    
+        
+        <div id="login-bt">
+
+            <button class="btn">{{ request.session.logname }}</button>
+        </div>
+    
+    </header>
+
+
+    <div class="login-form-container">
+
+        <span id="close-login-form" class="fas fa-times"></span>
+
+        <form action="/checklogindata" method="post">
+            {% csrf_token %}
+            <h3>user login </h3>
+            <input type="email" placeholder="email" class="box" name="email">
+            <input type="password" placeholder="password" class="box" name="password">
+            <p> forget your password <a href="#">click here</a> </p>
+            <input type="submit" value="login" class="btn">
+        </form>
+
+        <form action="/adddata" class="signup" method="post">
+            {% csrf_token %}
+            <h3>Enter your details</h3>
+            <input type="text" placeholder="name" class="box" name="name" required>
+            <input type="email" placeholder="email" class="box" name="email" required>
+            <input type="password" placeholder="password" class="box" name="password" required>
+            <input type="password" placeholder="conform password" class="box" name="cpassword" required>
+            <input type="tel" placeholder="contactno" class="box" name="contactno" required>
+            <select name="role" id="role" class="box" required>
+             <option value="">Select a role</option>
+              <option value="Client">Client</option>
+              <option value="Vehicle Owner">Vehicle Owner</option>
+            </select>
+            <input type="submit" value="Signup" class="btn">
+        </form>
+
+    </div>
+    <br>
+    <br>
+
+
+
+
+    <section class="contact" id="contact">
+
+        <h1 class="heading"><span>contact</span> us</h1>
+    
+        <div class="row">
+    
+            <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.9884692082627!2d72.57136271431785!3d23.022505484950725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e86cbe2d0e61b%3A0x9b7e3d5dcf32c7b3!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1647528491878!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+    
+            <form action="/adddatacontact" method="post">
+                {% csrf_token %}
+                <h3>get in touch</h3>
+                <input type="text" placeholder="Your name" name="name" class="box">
+                <input type="email" placeholder="Your email" name="email" class="box">
+                <input type="tel" placeholder="Mobile number" name="number" class="box">
+                <textarea placeholder="Your message" name="message" class="box" cols="30" rows="10"></textarea>
+                <input type="submit" value="send message" class="btn">
+            </form>
+    
+        </div>
+    
+    </section>
+
+
+
+    
+
+
+    <!-- footer --> 
+   <section class="footer" id="footer">
+
+        <div class="box-container">
+
+            <div class="box">
+                <h3>our branches</h3>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Ahmedabad </a>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Mahesana </a>
+            </div>
+
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="#"> <i class="fas fa-phone"></i> +91 9909909900 </a>
+                <a href="#"> <i class="fas fa-phone"></i> +91 2299229922 </a>
+                <a href="#"> <i class="fas fa-envelope"></i> heavyduty12@gmail.com </a>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Ahmedabad, india - 380001 </a>
+            </div>
+
+            <div class="box">
+                <h3>Social Media </h3>
+                <a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
+                <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
+                <a href="#"> <i class="fab fa-instagram"></i> instagram </a>
+            </div>
+
+        </div>
+
+        <div class="credit"> manage by heavyduty | 2022-23 all rights reserved </div>
+
+    </section>
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

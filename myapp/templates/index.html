@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+{% if messages %}
+{% for msg in messages %}
+<script>alert("{{ msg }}");</script>
+{% endfor %}
+{% endif %}
+    <header class="header">
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+    
+        <a href="{% url 'index.html' %}" class="logo"> <span>Heavy </span>duty </a>
+    
+        <nav class="navbar">
+            <a href="{% url 'index.html' %}">home</a>
+            <a href="{% url 'vehicles.html' %}">vehicles</a>
+            <a href="{% url 'services.html' %}">services</a>
+            <a href="{% url 'contact.html' %}">contact</a>
+            {% if owner %}
+            <a href="/ownerpage">My Page</a>
+            {% else %}
+            <a href="/clientpage">My Page</a>
+            {% endif %}
+        </nav>
+        {% if request.session.logname %}
+        <div id="login-btn">
+            <a class="btn" href="/logout">Logout</a>
+        </div>
+        {% else %}
+        <div id="login-btn">
+            <button class="btn">Login</button>
+        </div>
+        {% endif %}
+    
+    </header>
+{% if not request.session.logname %}
+
+            <div class="login-form-container">
+
+        <span id="close-login-form" class="fas fa-times"></span>
+
+        <form action="/checklogindata" method="post">
+            {% csrf_token %}
+            <h3>user login </h3>
+            <input type="email" placeholder="email" class="box" name="email">
+            <input type="password" placeholder="password" class="box" name="password">
+            <p> forget your password <a href="/forgotpass">click here</a> </p>
+            <input type="submit" value="login" class="btn">
+        </form>
+
+        <form action="/adddata" class="signup" method="post">
+            {% csrf_token %}
+            <h3>Enter your details</h3>
+            <input type="text" placeholder="name" class="box" name="name" required>
+            <input type="email" placeholder="email" class="box" name="email" required>
+            <input type="password" placeholder="password" class="box" name="password" required>
+            <input type="password" placeholder="conform password" class="box" name="cpassword" required>
+            <input type="tel" placeholder="contactno" class="box" name="contactno" required>
+            <select name="role" id="role" class="box" required>
+             <option value="">Select a role</option>
+              <option value="Client">Client</option>
+              <option value="Vehicle Owner">Vehicle Owner</option>
+            </select>
+            <input type="submit" value="Signup" class="btn">
+        </form>
+
+    </div>
+
+{% else %}
+        <div class="login-form-container">
+
+        <span id="close-login-form" class="fas fa-times"></span>
+        <form action="/updatedetails/{{ data.id }}" class="signup" method="post">
+            {% csrf_token %}
+            <h3>Your Profile</h3>
+            <input type="text" value="{{ data.name }}" class="box" name="name" required>
+            <input type="email" value="{{ data.email }}" class="box" name="email" required>
+            <input type="password" value="{{ data.password }}" class="box" name="password" required>
+            <input type="tel" value="{{ data.contactno }}" class="box" name="contactno" required>
+            <input type="submit" value="Edit" class="btn">
+        </form>
+            <a href="/logout">Log out</a>
+            </div>
+
+
+{% endif %}
+
+
+
+    <section class="home" id="home">
+
+        <h3 data-speed="-2" class="home-parallax">find vehicle</h3>
+    
+        <img data-speed="5" class="home-parallax" src="{% static 'image/home-img.png' %}" alt="">
+    
+        <a data-speed="7" href="/vehiclespage" class="btn home-parallax">explore vehicle</a>
+    
+    </section>
+
+    <section class="icons-container">
+
+        <!-- <div class="icons">
+            <i class="fas fa-home"></i>
+            <div class="content">
+                <h3>150+</h3>
+                <p>branches</p>
+            </div>
+        </div> -->
+    
+        <div class="icons">
+            <i class="fas fa-car"></i>
+            <div class="content">
+                <h3>{{ num_ro }}</h3>
+                <p>Vehicle Booked</p>
+            </div>
+        </div>
+    
+        <div class="icons">
+            <i class="fas fa-users"></i>
+            <div class="content">
+                <h3>{{ num_rows }}</h3>
+                <p>happy clients</p>
+            </div>
+        </div>
+    
+        <div class="icons">
+            <i class="fas fa-car"></i>
+            <div class="content">
+                <h3>{{ num_row }}</h3>
+                <p>Vehicles</p>
+            </div>
+        </div>
+    
+    </section>
+
+    <section class="vehicles" id="vehicles">
+
+        <h1 class="heading"> popular <span>vehicles</span> </h1>
+    
+        <div class="swiper vehicles-slider">
+    
+            <div class="swiper-wrapper">
+    
+                <div class="swiper-slide box">
+                    <img src="{% static 'image/car-2.png' %}" alt="">
+                    <div class="content">
+                        <h3>hydra</h3>
+                        <div class="price"> <span>price start from: </span> 2000/hour- </div>
+                        <p>
+                            <span class="fas fa-circle"></span> 2021
+                            <span class="fas fa-circle"></span> single opreted
+                            <span class="fas fa-circle"></span> disel
+                        </p>
+                        <a href="{% url 'vehicles.html' %}" class="btn">Check it</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{% static 'image/car-4.png' %}" alt="">
+                    <div class="content">
+                        <h3>Crane</h3>
+                        <div class="price"> <span>price start from: </span> 4000/Hour- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2021
+                            <span class="fas fa-circle"></span> 2 side operated
+                            <span class="fas fa-circle"></span> diseal
+                        </p>
+                        <a href="{% url 'vehicles.html' %}" class="btn">check it</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{% static 'image/car-5.png' %}" alt="">
+                    <div class="content">
+                        <h3>Excavator</h3>
+                        <div class="price"> <span>price start from: </span> 3000/hour- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2021
+                            <span class="fas fa-circle"></span> single opreted
+                            <span class="fas fa-circle"></span> disel
+                        </p>
+                        <a href="{% url 'vehicles.html' %}" class="btn">check it</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{% static 'image/car-6.png' %}" alt="">
+                    <div class="content">
+                        <h3>Mini hydra</h3>
+                        <div class="price"> <span>price start from: </span> 1000/hour- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2021
+                            <span class="fas fa-circle"></span> single opreted
+                            <span class="fas fa-circle"></span> disel
+                        </p>
+                        <a href="{% url 'vehicles.html' %}" class="btn">check it</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{% static 'image/car-9.png' %}" alt="">
+                    <div class="content">
+                        <h3>Excavator</h3>
+                        <div class="price"> <span>price start from: </span> 1500/hour- </div>
+                        <p>
+                            new
+                            <span class="fas fa-circle"></span> 2021
+                            <span class="fas fa-circle"></span> single opreted
+                            <span class="fas fa-circle"></span> disel
+                        </p>
+                        <a href="{% url 'vehicles.html' %}" class="btn">check it</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{% static 'image/car-8.png' %}" alt="">
+                    <div class="content">
+                        <h3>Mini roller</h3>
+                        <div class="price"> <span>price start from: </span> 1000/hour- </div>
+                        <p>
+                            <span class="fas fa-circle"></span> 2021
+                            <span class="fas fa-circle"></span> single opreted
+                            <span class="fas fa-circle"></span> disel
+                        </p>
+
+                        <a href="{% url 'vehicles.html' %}" class="btn">check it</a>
+                    </div>
+                </div>
+    
+            </div>
+    
+            <div class="swiper-pagination"></div>
+    
+        </div>
+    
+    </section>
+
+    <section class="services" id="services">
+
+        <h1 class="heading"> our <span>services</span> </h1>
+    
+        <div class="box-container">
+    
+            <div class="box">
+                <i class="fas fa-car"></i>
+                <h3>Vehicle Booking</h3>
+                <p>We make vehicle booking easy and trustworthy.</p>
+                <a href="#" class="btn"> read more</a>
+            </div>
+    
+            <div class="box">
+                <i class="fas fa-tools"></i>
+                <h3>Time saving</h3>
+                <p>Online booking make your work faster and saves Your time.</p>
+                <a href="#" class="btn"> read more</a>
+            </div>
+    
+            <div class="box">
+                <i class="fas fa-headset"></i>
+                <h3>24/7 support</h3>
+                <p>You can book vehicle any time its 24/7 available.</p>
+                <a href="#" class="btn"> read more</a>
+            </div>
+    
+        </div>
+    
+    </section>
+
+
+    <section class="featured" id="featured">
+
+        <h1 class="heading"> <span>featured</span> cars </h1>
+    
+        <div class="swiper featured-slider">
+    
+           <div class="swiper-wrapper">
+    
+                <div class="swiper-slide box">
+                    <img src="{% static 'image/car-1.png' %}" alt="">
+                    <div class="content">
+                        <h3>new model</h3>
+                        <div class="price">5,000/-</div>
+                        <a href="{% url 'vehicles.html' %}" class="btn">book</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{% static 'image/car-2.png' %}" alt="">
+                    <div class="content">
+                        <h3>Hydra</h3>
+                        <div class="price">5,000/-</div>
+                        <a href="{% url 'vehicles.html' %}" class="btn">book</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{% static 'image/car-3.png' %}" alt="">
+                    <div class="content">
+                        <h3>JCB</h3>
+                        <div class="price">5,000/-</div>
+                        <a href="{% url 'vehicles.html' %}" class="btn">book</a>
+                    </div>
+                </div>
+    
+                <div class="swiper-slide box">
+                    <img src="{% static 'image/car-4.png' %}" alt="">
+                    <div class="content">
+                        <h3>Crane</h3>
+                        <div class="price">5,000/-</div>
+                        <a href="{% url 'vehicles.html' %}" class="btn">book</a>
+                    </div>
+                </div>
+    
+           </div>
+    
+           <div class="swiper-pagination"></div>
+    
+        </div>
+    
+        <div class="swiper featured-slider">
+    
+            <div class="swiper-wrapper">
+     
+                 <div class="swiper-slide box">
+                     <img src="{% static 'image/car-5.png' %}" alt="">
+                     <div class="content">
+                         <h3>new model</h3>
+                         <div class="price">5,000/-</div>
+                         <a href="{% url 'vehicles.html' %}" class="btn">book</a>
+                     </div>
+                 </div>
+     
+                 <div class="swiper-slide box">
+                     <img src="{% static 'image/car-6.png' %}" alt="">
+                     <div class="content">
+                         <h3>new model</h3>
+                         <div class="price">5,000/-</div>
+                         <a href="{% url 'vehicles.html' %}" class="btn">book</a>
+                     </div>
+                 </div>
+     
+                 <div class="swiper-slide box">
+                     <img src="{% static 'image/car-7.png' %}" alt="">
+                     <div class="content">
+                         <h3>new model</h3>
+                         <div class="price">5,000/-</div>
+                         <a href="{% url 'vehicles.html' %}" class="btn">book</a>
+                     </div>
+                 </div>
+     
+                 <div class="swiper-slide box">
+                     <img src="{% static 'image/car-8.png' %}" alt="">
+                     <div class="content">
+                         <h3>new model</h3>
+                         <div class="price">5,000/-</div>
+                         <a href="{% url 'vehicles.html' %}" class="btn">book</a>
+                     </div>
+                 </div>
+     
+            </div>
+     
+            <div class="swiper-pagination"></div>
+     
+         </div>
+    
+    </section>
+    
+    <section class="contact" id="contact">
+
+        <h1 class="heading"><span>contact</span> us</h1>
+    
+        <div class="row">
+    
+            <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3670.9884692082627!2d72.57136271431785!3d23.022505484950725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e86cbe2d0e61b%3A0x9b7e3d5dcf32c7b3!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1647528491878!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+    
+            <form action="/adddatacontact" method="post">
+                {% csrf_token %}
+                <h3>get in touch</h3>
+                <input type="text" placeholder="Your name" name="name" class="box">
+                <input type="email" placeholder="Your email" name="email" class="box">
+                <input type="tel" placeholder="Mobile number" name="number" class="box">
+                <textarea placeholder="Your message" name="message" class="box" cols="30" rows="10"></textarea>
+                <input type="submit" value="send message" class="btn">
+            </form>
+    
+        </div>
+    
+    </section>
+
+    <section class="footer" id="footer">
+
+        <div class="box-container">
+    
+            <div class="box">
+                <h3>our branches</h3>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Ahmedabad </a>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Mahesana </a>
+            </div>
+    
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="#"> <i class="fas fa-phone"></i> +91 9909909900 </a>
+                <a href="#"> <i class="fas fa-phone"></i> +91 2299229922 </a>
+                <a href="#"> <i class="fas fa-envelope"></i> heavyduty12@gmail.com </a>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Ahmedabad, india - 380001 </a>
+            </div>
+    
+            <div class="box">
+                <h3>Social Media </h3>
+                <a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
+                <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
+                <a href="#"> <i class="fab fa-instagram"></i> instagram </a>
+            </div>
+    
+        </div>
+    
+        <div class="credit"> manage by heavyduty | 2022-23 all rights reserved </div>
+    
+    </section>
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

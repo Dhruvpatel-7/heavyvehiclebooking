@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+{% if messages %}
+{% for msg in messages %}
+<script>alert("{{ msg }}");</script>
+{% endfor %}
+{% endif %}
+    <header class="header">
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+
+        <a href="{% url 'index.html' %}" class="logo"> <span>Heavy </span>duty </a>
+
+        <nav class="navbar">
+            <a href="{% url 'index.html' %}">home</a>
+            <a href="{% url 'vehicles.html' %}">vehicles</a>
+            <a href="{% url 'services.html' %}">services</a>
+            <a href="{% url 'contact.html' %}">contact</a>
+            {% if owner %}
+            <a href="/ownerpage">My Page</a>
+            {% else %}
+            <a href="/clientpage">My Page</a>
+            {% endif %}
+        </nav>
+
+        <div id="login-btn">
+            <a href="/bookingpage" class="btn">Bookings</a>
+            <i class="far fa-user"></i>
+        </div>
+    </header>
+    <br><br><br><br><br><br>
+
+    <section class="featured" id="featured">
+        <center>
+    <form action="/updatedetails/{{ data.id }}" class="signup" method="post" style="background-color:#130f40; border-radius:20px">
+        {% csrf_token %}
+        <h1 style= "color:Yellow; font-size:40px">Your Profile</h1><br><br><br><br>
+        <label style="color:Yellow;font-size:20px">Name: </label><input style="border-radius:20px" type="text" value="   {{ data.name }}" class="box" name="name" required><br><br><br>
+        <label style="color:Yellow;font-size:20px">Email: </label><input  style="border-radius:20px" type="email" value="&nbsp;&nbsp;&nbsp;{{ data.email }}" class="box" name="email" required><br><br><br>
+        <label style="color:Yellow;font-size:20px">Password: </label><input style="border-radius:20px"  type="password" value="{{ data.password }}" class="box" name="password" required><br><br><br>
+        <label style="color:Yellow;font-size:20px">Mobile: </label><input  style="border-radius:20px" type="tel" value="   {{ data.contactno }}" class="box" name="contactno" required><br><br><br>
+        <input type="submit" value="Edit" class="btn">
+        <br><br>
+    </form>
+</center>
+    </section>
+
+
+
+    <section class="footer" id="footer">
+
+        <div class="box-container">
+    
+            <div class="box">
+                <h3>our branches</h3>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Ahmedabad </a>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Mahesana </a>
+            </div>
+    
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="#"> <i class="fas fa-phone"></i> +91 9909909900 </a>
+                <a href="#"> <i class="fas fa-phone"></i> +91 2299229922 </a>
+                <a href="#"> <i class="fas fa-envelope"></i> heavyduty12@gmail.com </a>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Ahmedabad, india - 380001 </a>
+            </div>
+    
+            <div class="box">
+                <h3>Social Media </h3>
+                <a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
+                <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
+                <a href="#"> <i class="fab fa-instagram"></i> instagram </a>
+            </div>
+    
+        </div>
+    
+        <div class="credit"> manage by heavyduty | 2022-23 all rights reserved </div>
+    
+    </section>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

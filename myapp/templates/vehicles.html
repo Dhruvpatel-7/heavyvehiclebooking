@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <header class="header">
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+
+        <a href="{% url 'index.html' %}" class="logo"> <span>Heavy </span>duty </a>
+
+        <nav class="navbar">
+            <a href="{% url 'index.html' %}">home</a>
+            <a href="{% url 'vehicles.html' %}">vehicles</a>
+            <a href="{% url 'services.html' %}">services</a>
+            <a href="{% url 'contact.html' %}">contact</a>
+
+            {% if owner %}
+            <a href="/ownerpage">My Page</a>
+            {% else %}
+            <a href="/clientpage">My Page</a>
+            {% endif %}
+        </nav>
+
+        <div id="login-bt">
+
+            <button class="btn">{{ request.session.logname }}</button>
+        </div>
+
+    </header>
+
+    <div class="login-form-container">
+
+        <span id="close-login-form" class="fas fa-times"></span>
+
+        <form action="/checklogindata" method="post">
+            {% csrf_token %}
+            <h3>user login </h3>
+            <input type="email" placeholder="email" class="box" name="email">
+            <input type="password" placeholder="password" class="box" name="password">
+            <p> forget your password <a href="#">click here</a> </p>
+            <input type="submit" value="login" class="btn">
+        </form>
+
+        <form action="/adddata" class="signup" method="post">
+            {% csrf_token %}
+            <h3>Enter your details</h3>
+            <input type="text" placeholder="name" class="box" name="name" required>
+            <input type="email" placeholder="email" class="box" name="email" required>
+            <input type="password" placeholder="password" class="box" name="password" required>
+            <input type="password" placeholder="conform password" class="box" name="cpassword" required>
+            <input type="tel" placeholder="contactno" class="box" name="contactno" required>
+            <select name="role" id="role" class="box" required>
+             <option value="">Select a role</option>
+              <option value="Client">Client</option>
+              <option value="Vehicle Owner">Vehicle Owner</option>
+            </select>
+            <input type="submit" value="Signup" class="btn">
+        </form>
+
+    </div>
+    <br>
+    <br>
+
+
+            <br>
+    <br>    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+        <h1 class="heading"> <span>Our </span> vehicles </h1>
+
+        <section class="services" id="services">
+            <div class="box-container">
+                {% for i in data %}
+                <div class="box">
+                    <img src="/media/{{ i.image }}" height="150px" alt="">
+                    <h3>{{ i.vtype }}</h3>
+                    <p>Model : {{ i.vmodel }}</p>
+                    <p>{{ i.rateperhour }}₹/hour</p>
+                    <p><i class="fas fa-map-marker-alt" style="height: 0px;width: 0px;line-height: 0;color:#f9d806;" ></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Location:{{ i.location }} </p>
+                    <a href="/checkout/{{ i.id }}" class="btn">book</a>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+<!--            <div class="container">-->
+<!--                <div class="row">-->
+<!--                {% for i in data %}-->
+<!--                <div class="col-lg-3">-->
+<!--                    <img src="/media/{{ i.image }}" height="200px" alt="">-->
+<!--                    <div class="content">-->
+<!--                        <h3>{{ i.vtype }}</h3>-->
+<!--                        <div class="stars">-->
+<!--                            <i class="fas fa-star"></i>-->
+<!--                            <i class="fas fa-star"></i>-->
+<!--                            <i class="fas fa-star"></i>-->
+<!--                            <i class="fas fa-star"></i>-->
+<!--                            <i class="fas fa-star-half-alt"></i>-->
+<!--                        </div>-->
+<!--                        <div class="price">{{ i.rateperhour }}₹/hour</div>-->
+<!--                        <a href="/checkout/{{ i.id }}" class="btn">book</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                {% endfor %}-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+
+
+
+    <section class="footer" id="footer">
+
+        <div class="box-container">
+    
+            <div class="box">
+                <h3>our branches</h3>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Ahmedabad </a>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Mahesana </a>
+            </div>
+    
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="#"> <i class="fas fa-phone"></i> +91 9909909900 </a>
+                <a href="#"> <i class="fas fa-phone"></i> +91 2299229922 </a>
+                <a href="#"> <i class="fas fa-envelope"></i> heavyduty12@gmail.com </a>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Ahmedabad, india - 380001 </a>
+            </div>
+    
+            <div class="box">
+                <h3>Social Media </h3>
+                <a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
+                <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
+                <a href="#"> <i class="fab fa-instagram"></i> instagram </a>
+            </div>
+    
+        </div>
+    
+        <div class="credit"> manage by heavyduty | 2022-23 all rights reserved </div>
+    
+    </section>
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+{% if messages %}
+{% for msg in messages %}
+<script>alert("{{ msg }}");</script>
+{% endfor %}
+{% endif %}
+    <header class="header">
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+
+        <a href="{% url 'index.html' %}" class="logo"> <span>Heavy </span>duty </a>
+
+        <nav class="navbar">
+            <a href="{% url 'index.html' %}">home</a>
+            <a href="{% url 'vehicles.html' %}">vehicles</a>
+            <a href="{% url 'services.html' %}">services</a>
+            <a href="{% url 'contact.html' %}">contact</a>
+            {% if owner %}
+            <a href="/ownerpage">My Page</a>
+            {% else %}
+            <a href="/clientpage">My Page</a>
+            {% endif %}
+        </nav>
+
+        <div id="login-btn">
+
+            <button class="btn">{{ request.session.logname }}</button>
+        </div>
+    </header>
+
+    <div class="login-form-container">
+
+        <span id="close-login-form" class="fas fa-times"></span>
+
+        <form action="/addvehicle" class="signup" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h3>Add Vehicle</h3>
+            <select name="vtype" id="role" class="box" required>
+                <option value="">Select a Type</option>
+                 <option value="Excavator">Excavator</option>
+                 <option value="JCB">JCB</option>
+                 <option value="Crane">Crane</option>
+                 <option value="Hydra">Hydra</option>
+               </select>
+            <input type="text" placeholder="Vehicle model" name="vmodel" class="box" required>
+            <input type="text" placeholder="Vehicle number plate" name="vnumberplate" class="box" required>
+            <input type="number" placeholder="Rate Per Hour" name="rateperhour" class="box" required>
+            <input type="text" placeholder="Location" name="location" class="box" required>
+            <br>
+            <input type="file" placeholder="Upload Vehicle pic" name="image" required>
+            <input type="submit" value="Add" class="btn">
+        </form>
+        <form action="/updatedetails/{{ data.id }}" class="signup" method="post">
+            {% csrf_token %}
+            <h3>Your Profile</h3>
+            <input type="text" value="{{ data.name }}" class="box" name="name" required>
+            <input type="email" value="{{ data.email }}" class="box" name="email" required>
+            <input type="password" value="{{ data.password }}" class="box" name="password" required>
+            <input type="tel" value="{{ data.contactno }}" class="box" name="contactno" required>
+            <input type="submit" value="Edit" class="btn">
+        </form>
+    </div>
+    <br>
+    <br>
+
+
+    <section class="featured" id="featured">
+        <br>
+        <br>
+        <br>
+<a href="/bookingpage" class="btn" style="margin-left:90%">Bookings</a>
+        <h1 class="heading"> <span>Your</span>Vehicles</h1>
+
+        <div class="swiper featured-slider">
+
+            <div class="swiper-wrapper">
+                {% for i in details %}
+                <div class="box">
+                    <img src="/media/{{ i.image }}" height="150px" alt="">
+                    <div class="content">
+                        <h3>{{ i.vtype }}</h3>
+                        <h2 style="color:darkblue">Number plate:{{ i.vnumberplate }}</h2>
+                        <h1>Model:{{ i.vmodel }}</h1>
+                        <div class="price">{{ i.rateperhour }}₹/Hour</div>
+                        <a href="/editvehicle/{{ i.id }}" class="btn">Edit Vehicle</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="swiper-pagination"></div>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="footer" id="footer">
+
+        <div class="box-container">
+    
+            <div class="box">
+                <h3>our branches</h3>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Ahmedabad </a>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Mahesana </a>
+            </div>
+    
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="#"> <i class="fas fa-phone"></i> +91 9909909900 </a>
+                <a href="#"> <i class="fas fa-phone"></i> +91 2299229922 </a>
+                <a href="#"> <i class="fas fa-envelope"></i> heavyduty12@gmail.com </a>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> Ahmedabad, india - 380001 </a>
+            </div>
+    
+            <div class="box">
+                <h3>Social Media </h3>
+                <a href="#"> <i class="fab fa-facebook-f"></i> facebook </a>
+                <a href="#"> <i class="fab fa-twitter"></i> twitter </a>
+                <a href="#"> <i class="fab fa-instagram"></i> instagram </a>
+            </div>
+    
+        </div>
+    
+        <div class="credit"> manage by heavyduty | 2022-23 all rights reserved </div>
+    
+    </section>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
